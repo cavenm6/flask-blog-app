@@ -23,7 +23,18 @@ def get_db_connection():
 # use the app.route() decorator to create a Flask view function called index()
 @app.route('/')
 def index():
-    
+    #Get a connection to the database
+    conn = get_db_connection()
+
+    #Execute a query to read all posts
+    posts = conn.execute('SELECT * from posts').fetchall()
+
+    #Close connection
+    conn.close()
+
+    #send the post to index.html template to be displayed
+    return render_template('index.html', posts = posts)
+
     return "<h1>Welcome to Menezes's Blog</h1>"
 
 
